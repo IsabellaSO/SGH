@@ -1,4 +1,6 @@
-﻿namespace SGH.Server.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SGH.Server.Models
 {
     public class Quartos
     {
@@ -11,5 +13,12 @@
 
         //padrão inicial ao cadastrar um novo quarto, o status será DISPONÍVEL
         public string Status { get; set; } = "DISPONÍVEL";
+
+        // 🔗 Chave Estrangeira para TiposQuarto
+        public int TipoQuartoId { get; set; }
+
+        // 🔗 Propriedade de Navegação do EF Core
+        [ForeignKey("TipoQuartoId")]
+        public TipoQuartos? TipoQuarto { get; set; }
     }
 }
