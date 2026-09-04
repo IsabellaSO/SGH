@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SGH.Server.Data;
@@ -11,9 +12,11 @@ using SGH.Server.Data;
 namespace SGH.Server.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260903162852_TabelaReservas")]
+    partial class TabelaReservas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,28 +122,6 @@ namespace SGH.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reserva");
-                });
-
-            modelBuilder.Entity("SGH.Server.Models.ReservasQuartos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("QuartoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ReservaId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("ValorDiaria")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReservaQuarto");
                 });
 
             modelBuilder.Entity("SGH.Server.Models.TipoQuartos", b =>

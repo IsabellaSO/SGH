@@ -60,12 +60,19 @@ public class QuartosController : ControllerBase
     [HttpPost("PostQuartos")]
     public async Task<ActionResult<QuartosDTO>> PostQuartos(CriarQuartoDTO dto)
     {
+
+        //Validar se o TipoQuarto realmente existe no banco antes de criar
+        var tipoExiste = await _context.TipoQuarto.AnyAsync(t => t.Id == dto.TipoQuartoId);
+        if (!tipoExiste)
+            return BadRequest($"O TipoQuartoId {dto.TipoQuartoId} não existe.");
+
         var novoQuarto = new Quartos
         {
             Numero = dto.Numero,
             Andar = dto.Andar,
             PrecoDiaria = dto.PrecoDiaria,
-            Status = "DISPONIVEL"
+            Status = "DISPONIVEL",
+            TipoQuartoId = dto.TipoQuartoId
         };
 
         _context.Quartos.Add(novoQuarto);
