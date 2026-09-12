@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  sgh.server:
+    image: ${DOCKER_REGISTRY-}sghserver
+    build:
+      context: .
+      dockerfile: SGH.Server/Dockerfile
+    ports:
+      - "7000:8080"
+    depends_on:
+      - sgh-db
+
+  sgh-db:
+    image: postgres:16-alpine
+    container_name: sgh_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: sgh_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
